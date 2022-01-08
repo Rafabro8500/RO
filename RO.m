@@ -1,16 +1,54 @@
-s = [1 1 1 2 2 2 3 3 4 4 5 6 6 7 8 9 9 10 11 12 12]
-t = [4 11 8 5 3 10 9 14 11 5 6 7 12 8 9 10 13 14 12 13 14]
-weights = [1136 1702 2828 2349 596 789 366 385 683 959 573 732 1450 750 706 451 839 246 2049 1128 1976]
+%s = [1 1 1 2 2 2 3 3 4 4 5 6 6 7 8 9 9 10 11 12 12]
+%t = [4 11 8 5 3 10 9 14 11 5 6 7 12 8 9 10 13 14 12 13 14]
+%weights = [1136 1702 2828 2349 596 789 366 385 683 959 573 732 1450 750 706 451 839 246 2049 1128 1976]
 
-NSF = graph(s, t, weights)
-height(G.Nodes)
-NSF.Nodes.Number = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}'
+%NSF = graph(s, t, weights)
+%NSF.Nodes.Number = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}'
+%plot(NSF,'Layout', 'auto','EdgeLabel',NSF.Edges.Weight)
 
-plot(G,'Layout', 'auto','EdgeLabel',NSF.Edges.Weight)
+s = [1 1 2 2 3 3 4 5];
+t = [2 6 6 3 5 4 5 6];
+dist = [500 800 300 500 300 500 800 500];
 
-[d, p] = kShortestPath(NSF,1,10,3);
-disp(d)
-disp(p)
+traffic_matrix = [0 20 10 10 20 10; 
+                  20 0 20 10 20 10;
+                  10 20 0 20 10 0;
+                  10 10 20 0 10 20;
+                  20 20 10 10 0 20;
+                  10 10 0 20 20 0;]
+
+
+G = graph(s,t,dist)
+
+plot(G,'Layout','auto','EdgeLabel',G.Edges.Weight)
+
+
+
+routes = getRoutes(G)
+
+
+
+function[OUTPUT] = firstFit(G, routes, matrix)
+
+    for i = 1:size(routes,1) 
+    end
+end
+
+function[ROUTES] = getRoutes(G)
+    start = 1;
+    
+    for i = 1:height(G.Nodes)-1
+     
+        for j = i+1:height(G.Nodes)
+            [path, dist, edgepath] = shortestpath(G,i,j);
+            ROUTES{start,1} = path;
+            ROUTES{start,2} = dist;
+            ROUTES{start,3} = edgepath;
+            start = start +1;
+        end
+    end
+end
+
 
 function[DISTANCES, PATHS] = kShortestPath(G,s,t,k) %yikes, tem problemas
     if(s == t)
